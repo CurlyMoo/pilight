@@ -31,7 +31,11 @@
 #include "../core/common.h"
 #include "../core/json.h"
 #include "../core/log.h"
-#include "../events/events.h"
+
+#ifdef EVENTS
+	#include "../events/events.h"
+#endif
+
 #include "../events/operator.h"
 #include "../events/action.h"
 #include "../events/function.h"

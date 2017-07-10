@@ -394,9 +394,10 @@ int devices_update(char *protoname, JsonNode *json, enum origin_t origin, JsonNo
 									jchild = jchild->next;
 								}
 								if(match == 0) {
+#ifdef EVENTS
 									dptr->prevorigin = dptr->lastorigin;
 									dptr->lastorigin = origin;
-#ifdef EVENTS
+
 									/*
 									* If the action itself it not triggering a device update, something
 									* else is. We therefor need to abort the running action to let
