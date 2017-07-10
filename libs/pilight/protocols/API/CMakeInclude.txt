@@ -8,23 +8,26 @@ foreach(header ${${PROJECT_NAME}_headers})
 	list(APPEND headers ${header2})
 endforeach(header)
 
-string(REPLACE "!" "\n" header4 ${headers})
-set(PROTOCOL_HEADERS ${header4})
-configure_file(${PROJECT_SOURCE_DIR}/protocol_header.h.in ${PROJECT_SOURCE_DIR}/protocol_header.h)	
+if(headers)
+	string(REPLACE "!" "\n" header4 ${headers})
+	set(PROTOCOL_HEADERS ${header4})
 
-execute_process(
-COMMAND grep -h "void .*Init(void)" ${${PROJECT_NAME}_sources}
-	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-	RESULT_VARIABLE protocol_result
-	OUTPUT_VARIABLE protocol_init)
+	execute_process(
+	COMMAND grep -h "void .*Init(void)" ${${PROJECT_NAME}_sources}
+		WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+		RESULT_VARIABLE protocol_result
+		OUTPUT_VARIABLE protocol_init)
 
-set(inits)
-foreach(init ${protocol_init})
-	string(REPLACE "void " "	" init1 ${init})
-	string(REPLACE "(void) {" "()!" init2 ${init1})
-	list(APPEND inits ${init2})
-endforeach(init)
+	set(inits)
+	foreach(init ${protocol_init})
+		string(REPLACE "void " "	" init1 ${init})
+		string(REPLACE "(void) {" "()!" init2 ${init1})
+		list(APPEND inits ${init2})
+	endforeach(init)
 
-string(REPLACE "!" ";" init4 ${inits})
-set(PROTOCOL_INIT ${init4})
-configure_file(${PROJECT_SOURCE_DIR}/protocol_init.h.in ${PROJECT_SOURCE_DIR}/protocol_init.h)	
+	string(REPLACE "!" ";" init4 ${inits})
+	set(PROTOCOL_INIT ${init4})
+endif()
+
+configure_file(${PROJECT_SOURCE_DIR}/protocol_header.h.in ${PROJECT_SOURCE_DIR}/protocol_header.h)
+configure_file(${PROJECT_SOURCE_DIR}/protocol_init.h.in ${PROJECT_SOURCE_DIR}/protocol_init.h)
