@@ -389,17 +389,17 @@ if(${MODULESPACK} MATCHES "OFF" OR WIN32)
 		DESTINATION lib)
 
 	if(NOT WIN32)
-		if(EXISTS "/usr/local/lib/${PROJECT_NAME}/protocols")
-			install(CODE "execute_process(COMMAND find /usr/local/lib/${PROJECT_NAME}/protocols/ -type f -exec rm {} \\;)")
+		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/protocols")
+			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/protocols/ -type f -exec rm {} \\;)")
 		endif()
-		if(EXISTS "/usr/local/lib/${PROJECT_NAME}/hardware")
-			install(CODE "execute_process(COMMAND find /usr/local/lib/${PROJECT_NAME}/hardware/ -type f -exec rm {} \\;)")
+		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/hardware")
+			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/hardware/ -type f -exec rm {} \\;)")
 		endif()
-		if(EXISTS "/usr/local/lib/${PROJECT_NAME}/actions")
-			install(CODE "execute_process(COMMAND find /usr/local/lib/${PROJECT_NAME}/actions/ -type f -exec rm {} \\;)")
+		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/actions")
+			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/actions/ -type f -exec rm {} \\;)")
 		endif()
-		if(EXISTS "/usr/local/lib/${PROJECT_NAME}/operators")
-			install(CODE "execute_process(COMMAND find /usr/local/lib/${PROJECT_NAME}/operators/ -type f -exec rm {} \\;)")
+		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/operators")
+			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/operators/ -type f -exec rm {} \\;)")
 		endif()
 
 		if(EXISTS "/etc/${PROJECT_NAME}/config.json")
@@ -409,6 +409,8 @@ if(${MODULESPACK} MATCHES "OFF" OR WIN32)
 		if(EXISTS "/etc/${PROJECT_NAME}/pilight.pem")
 			install(CODE "execute_process(COMMAND mv /etc/${PROJECT_NAME}/pilight.pem /etc/${PROJECT_NAME}/pilight.pem.bak)")
 		endif()		
+
+		configure_file(${PROJECT_SOURCE_DIR}/res/init/${PROJECT_NAME}.initd.in ${PROJECT_SOURCE_DIR}/res/init/${PROJECT_NAME}.initd)
 
 		install(PROGRAMS ${PROJECT_SOURCE_DIR}/res/init/${PROJECT_NAME}.initd DESTINATION /etc/init.d/ RENAME ${PROJECT_NAME})
 		install(FILES ${PROJECT_SOURCE_DIR}/res/config/config.json-default DESTINATION /etc/${PROJECT_NAME}/ RENAME config.json COMPONENT ${PROJECT_NAME})
@@ -592,20 +594,20 @@ if(${MODULESPACK} MATCHES "OFF" OR WIN32)
 	endif()
 
 	if(NOT WIN32)
-		if(EXISTS "/usr/local/sbin/${PROJECT_NAME}-send")
-			install(CODE "execute_process(COMMAND rm /usr/local/sbin/${PROJECT_NAME}-send)")
+		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-send")
+			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-send)")
 		endif()
 
-		if(EXISTS "/usr/local/sbin/${PROJECT_NAME}-receive")
-			install(CODE "execute_process(COMMAND rm /usr/local/sbin/${PROJECT_NAME}-receive)")
+		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-receive")
+			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-receive)")
 		endif()
 
-		if(EXISTS "/usr/local/sbin/${PROJECT_NAME}-control")
-			install(CODE "execute_process(COMMAND rm /usr/local/sbin/${PROJECT_NAME}-control)")
+		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-control")
+			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-control)")
 		endif()
 
-		if(EXISTS "/usr/local/sbin/${PROJECT_NAME}-uuid")
-			install(CODE "execute_process(COMMAND rm /usr/local/sbin/${PROJECT_NAME}-uuid)")
+		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-uuid")
+			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-uuid)")
 		endif()
 	endif()
 
@@ -686,10 +688,10 @@ else()
 	message("")
 	message("${Red}-- WARNING --${ColorReset}")
 	message("${Yellow}Manually compiling and installing ${PROJECT_NAME} will also clear all module folders:
-/usr/local/lib/${PROJECT_NAME}/protocols/
-/usr/local/lib/${PROJECT_NAME}/hardware/
-/usr/local/lib/${PROJECT_NAME}/actions/
-/usr/local/lib/${PROJECT_NAME}/operators/${ColorReset}")
+$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/protocols/
+$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/hardware/
+$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/actions/
+$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/operators/${ColorReset}")
 	message("${Red}-- WARNING --${ColorReset}")
 	message("")
 endif()

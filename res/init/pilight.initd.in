@@ -17,7 +17,7 @@
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin
 NAME=pilight
-DAEMON=/usr/local/sbin/pilight-daemon
+DAEMON=@CMAKE_INSTALL_PREFIX@/sbin/pilight-daemon
 #Should be the same as in: /etc/pilight/config.json
 if [ -f /etc/pilight/config.json ] && [ $(grep -c pid-file /etc/pilight/config.json) -ge 1 ]; then
 	PIDFILE=$(sed -ne 's/\(.*\)"pid-file":[\ ]\{0,\}"\(.*\)",/\2/p' /etc/pilight/config.json);

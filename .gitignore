@@ -24,3 +24,4 @@ libs/pilight/protocols/protocol_init.h
 libs/pilight/protocols/zwave/protocol_header.h
 libs/pilight/protocols/zwave/protocol_init.h
 /build/
+res/init/pilight.initd
