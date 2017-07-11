@@ -394,33 +394,34 @@ if(${MODULESPACK} MATCHES "OFF" OR WIN32)
 	install(TARGETS
 		${PROJECT_NAME}_shared
 		${PROJECT_NAME}_static
-		DESTINATION lib)
+		DESTINATION lib
+		COMPONENT ${PROJECT_NAME})
 
 	if(NOT WIN32)
 		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/protocols")
-			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/protocols/ -type f -exec rm {} \\;)")
+			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/protocols/ -type f -exec rm {} \\;)" COMPONENT ${PROJECT_NAME})
 		endif()
 		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/hardware")
-			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/hardware/ -type f -exec rm {} \\;)")
+			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/hardware/ -type f -exec rm {} \\;)" COMPONENT ${PROJECT_NAME})
 		endif()
 		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/actions")
-			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/actions/ -type f -exec rm {} \\;)")
+			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/actions/ -type f -exec rm {} \\;)" COMPONENT ${PROJECT_NAME})
 		endif()
 		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/operators")
-			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/operators/ -type f -exec rm {} \\;)")
+			install(CODE "execute_process(COMMAND find $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/operators/ -type f -exec rm {} \\;)" COMPONENT ${PROJECT_NAME})
 		endif()
 
 		if(EXISTS "/etc/${PROJECT_NAME}/config.json")
-			install(CODE "execute_process(COMMAND mv /etc/${PROJECT_NAME}/config.json /etc/${PROJECT_NAME}/config.json.bak)")
+			install(CODE "execute_process(COMMAND mv /etc/${PROJECT_NAME}/config.json /etc/${PROJECT_NAME}/config.json.bak)" COMPONENT ${PROJECT_NAME})
 		endif()
 		
 		if(EXISTS "/etc/${PROJECT_NAME}/pilight.pem")
-			install(CODE "execute_process(COMMAND mv /etc/${PROJECT_NAME}/pilight.pem /etc/${PROJECT_NAME}/pilight.pem.bak)")
+			install(CODE "execute_process(COMMAND mv /etc/${PROJECT_NAME}/pilight.pem /etc/${PROJECT_NAME}/pilight.pem.bak)" COMPONENT ${PROJECT_NAME})
 		endif()		
 
 		configure_file(${PROJECT_SOURCE_DIR}/res/init/${PROJECT_NAME}.initd.in ${PROJECT_SOURCE_DIR}/res/init/${PROJECT_NAME}.initd)
 
-		install(PROGRAMS ${PROJECT_SOURCE_DIR}/res/init/${PROJECT_NAME}.initd DESTINATION /etc/init.d/ RENAME ${PROJECT_NAME})
+		install(PROGRAMS ${PROJECT_SOURCE_DIR}/res/init/${PROJECT_NAME}.initd DESTINATION /etc/init.d/ RENAME ${PROJECT_NAME} COMPONENT ${PROJECT_NAME})
 		install(FILES ${PROJECT_SOURCE_DIR}/res/config/config.json-default DESTINATION /etc/${PROJECT_NAME}/ RENAME config.json COMPONENT ${PROJECT_NAME})
 		install(FILES ${PROJECT_SOURCE_DIR}/res/pilight.pem DESTINATION /etc/${PROJECT_NAME}/ COMPONENT ${PROJECT_NAME})
 	else()
@@ -599,19 +600,19 @@ if(${MODULESPACK} MATCHES "OFF" OR WIN32)
 
 	if(NOT WIN32)
 		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-send")
-			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-send)")
+			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-send)" COMPONENT ${PROJECT_NAME})
 		endif()
 
 		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-receive")
-			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-receive)")
+			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-receive)" COMPONENT ${PROJECT_NAME})
 		endif()
 
 		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-control")
-			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-control)")
+			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-control)" COMPONENT ${PROJECT_NAME})
 		endif()
 
 		if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-uuid")
-			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-uuid)")
+			install(CODE "execute_process(COMMAND rm $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/sbin/${PROJECT_NAME}-uuid)" COMPONENT ${PROJECT_NAME})
 		endif()
 	endif()
 
@@ -635,8 +636,8 @@ if(${MODULESPACK} MATCHES "OFF" OR WIN32)
 		install(FILES "${PROJECT_SOURCE_DIR}/res/win32/Packet.dll" DESTINATION . COMPONENT ${PROJECT_NAME})
 		install(FILES "${PROJECT_SOURCE_DIR}/res/win32/wpcap.dll" DESTINATION . COMPONENT ${PROJECT_NAME})
 	else()
-		install(CODE "execute_process(COMMAND update-rc.d ${PROJECT_NAME} defaults)")
-		install(CODE "execute_process(COMMAND ldconfig)")
+		install(CODE "execute_process(COMMAND update-rc.d ${PROJECT_NAME} defaults)" COMPONENT ${PROJECT_NAME})
+		install(CODE "execute_process(COMMAND ldconfig)" COMPONENT ${PROJECT_NAME})
 	endif()
 endif()
 
