@@ -47,23 +47,17 @@
 #define MEMBUFFER								128
 #define EOSS										"\n\n" // End Of Socket Stream
 
-#ifdef _WIN32
-	#define PROTOCOL_ROOT						"c:/pilight/protocols/"
-	#define HARDWARE_ROOT						"c:/pilight/hardware/"
-	#define OPERATOR_ROOT						"c:/pilight/operators/"
-	#define FUNCTION_ROOT						"c:/pilight/functions/"	
-	#define ACTION_ROOT							"c:/pilight/actions/"	
+#define PROTOCOL_ROOT						"@PILIGHT_ROOT@/protocols/"
+#define HARDWARE_ROOT						"@PILIGHT_ROOT@/hardware/"
+#define OPERATOR_ROOT						"@PILIGHT_ROOT@/operators/"
+#define FUNCTION_ROOT						"@PILIGHT_ROOT@/functions/"
+#define ACTION_ROOT							"@PILIGHT_ROOT@/actions/"
 
+#ifdef _WIN32
 	#define CONFIG_FILE							"c:/pilight/config.json"
 	#define LOG_FILE								"c:/pilight/pilight.log"
 	#define PEM_FILE								"c:/pilight/pilight.pem"
 #else
-	#define PROTOCOL_ROOT						"@CMAKE_INSTALL_PREFIX@/lib/pilight/protocols/"
-	#define HARDWARE_ROOT						"@CMAKE_INSTALL_PREFIX@/lib/pilight/hardware/"
-	#define OPERATOR_ROOT						"@CMAKE_INSTALL_PREFIX@/lib/pilight/operators/"
-	#define FUNCTION_ROOT						"@CMAKE_INSTALL_PREFIX@/lib/pilight/functions/"	
-	#define ACTION_ROOT							"@CMAKE_INSTALL_PREFIX@/lib/pilight/actions/"	
-
 	#define PID_FILE								"/var/run/pilight.pid"
 	#define CONFIG_FILE							"/etc/pilight/config.json"
 	#define LOG_FILE								"/var/log/pilight.log"
