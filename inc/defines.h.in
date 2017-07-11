@@ -31,11 +31,7 @@
 #ifdef WEBSERVER
 	#define WEBSERVER_HTTP_PORT				5001
 	#define WEBSERVER_HTTPS_PORT			5002
-	#ifdef _WIN32
-		#define WEBSERVER_ROOT				"c:/pilight/web/"
-	#else
-		#define WEBSERVER_ROOT				"@CMAKE_INSTALL_PREFIX@/share/pilight/"
-	#endif
+	#cmakedefine WEBSERVER_ROOT	"@WEBSERVER_ROOT@"
 	#define WEBSERVER_ENABLE			1
 	#define WEBSERVER_CACHE				1
 	#define MAX_UPLOAD_FILESIZE 	5242880

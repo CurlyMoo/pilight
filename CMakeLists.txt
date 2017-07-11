@@ -292,6 +292,14 @@ endif()
 include_directories(${PROJECT_SOURCE_DIR}/inc)
 include_directories(/usr/local/include/)
 
+if(${WEBSERVER} MATCHES "ON")
+	if(WIN32)
+		set(WEBSERVER_ROOT "${CMAKE_INSTALL_PREFIX}/web")
+	else()
+		set(WEBSERVER_ROOT "${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}")
+	endif()
+endif()
+
 add_subdirectory(inc)
 add_subdirectory(libs)
 
@@ -420,11 +428,7 @@ if(${MODULESPACK} MATCHES "OFF" OR WIN32)
 	endif()
 
 	if(${WEBSERVER} MATCHES "ON")
-		if(WIN32)
-			install(DIRECTORY ${PROJECT_SOURCE_DIR}/libs/webgui/ DESTINATION web/ COMPONENT webgui)
-		else()
-			install(DIRECTORY ${PROJECT_SOURCE_DIR}/libs/webgui/ DESTINATION /usr/local/share/${PROJECT_NAME} COMPONENT webgui)
-		endif()
+		install(DIRECTORY ${PROJECT_SOURCE_DIR}/libs/webgui/ DESTINATION ${WEBSERVER_ROOT} COMPONENT webgui)
 	endif()	
 
 	if(WIN32)
